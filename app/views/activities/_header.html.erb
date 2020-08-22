@@ -1,0 +1,58 @@
+<header>
+   <div class="container">
+     <div class="row">
+       <div class="col-md-4">
+         <a href="./" class="text-decoration-none">
+           <%= image_tag("logo.png", class: "menu_icon") %>
+         </a>
+       </div>
+       <div class="col-md-4">
+         <input type="text" class="form-control form-control-lg" placeholder="Search for people, activities and more...">
+       </div>
+       <div class="col-md-4 text-right">
+         <ul class="list-unstyled navLinks">
+           <li>
+             <a href="#">Feed</a>
+           </li>
+           <li>
+             <a href="#">Friends</a>
+           </li>
+           <li>
+             <a href="#">Activities</a>
+           </li>
+           <li class="userDetails">
+             <span class="avatar">
+               <%= image_tag("avatar.png") %>
+             </span>
+             <span class="userName">John Doe</span>
+             <span class="arrow">
+               <%= image_tag("arrow.png") %>
+             </span>
+             <ul class="list-unstyled">
+               <li>
+                 <a href="#">
+                   Profile
+                 </a>
+               </li>
+               <li>
+                 <a href="#">
+                   My Favourites
+                 </a>
+               </li>
+               <li>
+                 <a href="#">
+                   Payment Details
+                 </a>
+               </li>
+               <li>
+                 <a href="#">
+                   Settings
+                 </a>
+               </li>
+             </ul>
+           </li>
+         </ul>
+       </div>
+     </div>
+   </div>
+ </header>

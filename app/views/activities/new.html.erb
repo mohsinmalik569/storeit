@@ -1,0 +1,469 @@
+<%= render partial: 'header'%>
+
+ <div class="container my-3 gobalPart">
+   <h1 class="customFont fs-18 text-center">Choose an Activity</h1>
+   <div class="stepList">
+     <span class="s1 active">1</span>
+     <span class="s2">2</span>
+     <span class="s3">3</span>
+     <span class="s4">4</span>
+   </div>
+ </div>
+
+ <!-- STEP 1 START -->
+<%= simple_form_for @activity= Activity.new, url: new_activity_path, method: :get, remote: true do |f| %>
+ <div class="container my-3 step1">
+   <div class="row">
+     <div class="col text-center" data-value="0">
+       <%= image_tag("01.jpg", class: "img-fluid") %>
+
+       <div class="font-weight-bold">
+         Activities
+       </div>
+     </div>
+     <div class="col text-center" data-value="1">
+       <%= image_tag("02.jpg", class: "img-fluid") %>
+       <div class="font-weight-bold">
+         WorkShops
+       </div>
+     </div>
+     <div class="col text-center" data-value="2">
+       <%= image_tag("03.jpg", class: "img-fluid") %>
+       <div class="font-weight-bold">
+         Tours
+       </div>
+     </div>
+     <div class="col text-center" data-value="3">
+       <%= image_tag("04.jpg", class: "img-fluid") %>
+       <div class="font-weight-bold">
+         Travel Partner
+       </div>
+     </div>
+     <div class="col text-center" data-value="4">
+       <%= image_tag("05.jpg", class: "img-fluid") %>
+       <div class="font-weight-bold">
+         Hotel Package
+       </div>
+     </div>
+   </div>
+
+   <div class="row mt-3">
+     <div class="col-sm-12 text-center">
+       <%= f.input :activity_type, as: :hidden, :input_html => {id: 'step1', name: 'activity_type'} %>
+       <button class="btn btn-warning text-white font-weight-bold goNextStep" data-prev-step="" data-current-step="1" data-next-step="2">
+         Next Step
+       </button>
+     </div>
+   </div>
+ </div>
+ <% end %>
+ <!-- STEP 1 END -->
+
+
+
+ <!-- STEP 2 START -->
+ <%= simple_form_for @activity, url: new_activity_path, method: :get, remote: true do |f| %>
+    <%= f.input :activity_type, as: :hidden, value: "#{params[:activity_type]}" %>
+     <div class="container my-3 step2">
+       <div class="row">
+         <div class="col-sm-5">
+           <div class="row">
+             <div class="col-sm-12">
+               <div class="font-weight-bold">
+                 What do you want to offer?*
+               </div>
+               <%= f.input :offer_title, label: false, :input_html => { class: "form-control form-control-lg"}, name: "toOffer", id: "toOffer" %>
+             </div>
+           </div>
+
+           <div class="row mt-3">
+             <div class="col-sm-12">
+               <div class="font-weight-bold">
+                 Short Description*
+               </div>
+               <%= f.input :short_description, label: false, :input_html => { class: "form-control"}, name: "shortDes", id: "shortDes" %>
+               <div class="text-right">
+                 <small>Max 120 Characters</small>
+               </div>
+             </div>
+           </div>
+
+           <div class="row mt-3">
+             <div class="col-sm-12">
+               <div class="font-weight-bold">
+                 Long Description*
+               </div>
+               <%= f.input :long_description, label: false, :input_html => { class: "form-control"}, name: "longDes", id: "longDes" %>
+             </div>
+           </div>
+
+           <div class="row mt-3">
+             <div class="col-sm-12">
+               <div class="font-weight-bold">
+                 Public or Private in search?
+               </div>
+               <div class="custom-control custom-radio custom-control-inline">
+                 <%= f.input :search_type, as: :radio_buttons, label: false, class: "custom-control-input", id: "public", name: "publicOrPrivate", collection:  Activity.search_types.keys.map{|a| [a.remove("_activity").capitalize, a]}%>
+                 <!-- <input type="radio" class="custom-control-input" id="public" name="publicOrPrivate" value="public" checked>
+                 <label class="custom-control-label" for="public">Public</label> -->
+               </div>
+               <!-- <div class="custom-control custom-radio custom-control-inline">
+                 <input type="radio" class="custom-control-input" id="private" name="publicOrPrivate" value="private">
+                 <label class="custom-control-label" for="private">Private</label>
+               </div> -->
+             </div>
+           </div>
+
+         </div>
+         <div class="col-sm-7">
+           <div class="font-weight-bold">
+             Tags
+           </div>
+           <div class="row">
+             <div class="col-sm-3">
+               <% @activity.tags.build %>
+               <%= f.simple_fields_for :tags do |tagsinput| %>
+                 <%= tagsinput.input :tag_name, label: false, input_html:{data:{role:'tagsinput'}} , class: "form-control form-control-lg", name: "tags", id: "tags" %>
+               <% end %>
+             </div>
+             <div class="col-sm-9"></div>
+           </div>
+         </div>
+       </div>
+
+       <div class="row mt-3">
+         <div class="col-sm-12 text-center">
+           <button class="btn btn-warning text-white font-weight-bold goNextStep" data-prev-step="1" data-current-step="2" data-next-step="3">
+             Next Step
+           </button>
+         </div>
+       </div>
+     </div>
+    <% end %>
+ <!-- STEP 2 END -->
+
+ <!-- STEP 3 START -->
+ <%= simple_form_for @activity, url: new_activity_path, method: :get, remote: true do |f| %>
+ <div class="container my-3 py-3 text-left step3">
+   <!-- <% if params[:activity].present? %>
+     <input type="hidden" name="activity_type" value="<%= params[:activity][:activity_type] %>">
+     <input type="hidden" name="offer_title" value="<%= params[:activity][:offer_title] %>">
+     <input type="hidden" name="short_description" value="<%= params[:activity][:short_description] %>">
+     <input type="hidden" name="long_description" value="<%= params[:activity][:long_description] %>">
+     <input type="hidden" name="search_type" value="<%= params[:activity][:search_type] %>">
+     <input type="hidden" name="tag_name" value="<%= params[:activity][:tags_attributes]["0"][:tag_name] %>">
+   <% end %> -->
+    <div class="imageSelectionContainer">
+      <div class="headerCaption mb-1">
+        Choose a number of suitable images
+      </div>
+      <div class="wrapperImagesPart">
+        <div class="mainImg">
+          <%= image_tag("06.jpg") %>
+        </div>
+        <div class="thumbnails">
+          <div class="img">
+            <span class="setDefault" title="Click to Set Main Image">Set Main</span>
+            <%= image_tag("07.jpg") %>
+          </div>
+          <div class="img">
+            <span class="setDefault" title="Click to Set Main Image">Set Main</span>
+            <%= image_tag("08.jpg") %>
+          </div>
+          <div class="img">
+            <span class="setDefault" title="Click to Set Main Image">Set Main</span>
+            <%= image_tag("09.jpg") %>
+          </div>
+          <div class="img">
+            <span class="setDefault" title="Click to Set Main Image">Set Main</span>
+            <%= image_tag("10.jpg") %>
+          </div>
+        </div>
+      </div>
+      <div class="text-right">
+        <i>You can drag the images to change the order</i>
+      </div>
+    </div>
+    <br clear="all">
+    <div class="row mt-3">
+      <div class="col-sm-12 text-left">
+        <span class="btn btn-warning text-white font-weight-bold goNextStep" id="thisIsStep3" data-prev-step="2" data-current-step="3" data-next-step="4">
+            Next Step
+          </span>
+      </div>
+    </div>
+  </div>
+<% end %>
+  <!-- STEP 3 END -->
+
+  <!-- STEP 4 START -->
+  <%= simple_form_for @activity, url: activities_path, method: :post, remote: true do |f| %>
+  <div class="container my-3 py-3 step4">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#highlights">HIGHLIGHTS</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#people">PEOPLE</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#date">DATE</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#price">PRICE</a>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content bg-light p-3">
+      <div id="highlights" class="tab-pane active "><br>
+        <div class="row">
+          <div class="col-sm-6 mb-3">
+            <div class="font-weight-bold">
+              Your activity highlights*
+            </div>
+            <div class="input-group mb-3 input-group-lg">
+              <%= f.input :highlight_title, label: false, :input_html => { class: "form-control", placeholder: "Three unique locations"} %>
+              <div class="input-group-append">
+                <span class="input-group-text">
+                <%= image_tag "plus.svg"%>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 mb-3"></div>
+
+          <div class="col-sm-6 mb-3">
+            <div class="font-weight-bold">
+              What's including?*
+            </div>
+            <div class="input-group mb-3 input-group-lg">
+              <% @activity.include_details.build %>
+              <%= f.simple_fields_for :include_details do |incdetail| %>
+                <%= incdetail.input :detail_title, label: false, input_html:{ class: "form-control" , placeholder: "Food and drinks"} %>
+              <% end %>
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <%= image_tag "plus.svg"%>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 mb-3">
+            <div class="font-weight-bold">
+              What's excluding?*
+            </div>
+            <div class="input-group mb-3 input-group-lg">
+              <% @activity.exclude_details.build %>
+              <%= f.simple_fields_for :exclude_details do |excdetail| %>
+                <%= excdetail.input :detail_title, label: false, input_html:{ class: "form-control" , placeholder: "Bikes"} %>
+              <% end %>
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <%= image_tag "plus.svg"%>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="col-sm-6 mb-3">
+            <div class="font-weight-bold">
+              What languages do you speak?*
+            </div>
+            <div class="input-group mb-3 input-group-lg">
+              <input type="text" class="form-control" placeholder="English">
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <img src="./assets/images/plus.svg">
+                </span>
+              </div>
+            </div>
+          </div> -->
+
+        </div>
+      </div>
+      <div id="people" class="container tab-pane fade"><br>
+        <div class="row">
+          <div class="col-sm-6 mb-3">
+            <div class="font-weight-bold">
+              Maximum amount of participants*
+            </div>
+            <div class="input-group mb-3 input-group-lg">
+              <%= f.input :maximum_participants, label: false, :input_html => { class: "form-control", placeholder: "Numbers Only"} %>
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <%= image_tag "plus.svg"%>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 mb-3">
+            <div class="font-weight-bold">
+              Minimum amount of participants*
+            </div>
+            <div class="input-group mb-3 input-group-lg">
+              <%= f.input :minimum_participents, label: false, :input_html => { class: "form-control", placeholder: "Numbers Only"} %>
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <%= image_tag "plus.svg"%>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 mb-3">
+            <div class="font-weight-bold">
+              Maximum age to participate
+            </div>
+            <div class="input-group mb-3 input-group-lg">
+              <%= f.input :max_age, label: false, :input_html => { class: "form-control", placeholder: "Numbers Only"} %>
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <%= image_tag "plus.svg"%>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 mb-3">
+            <div class="font-weight-bold">
+              Minimum age to participate
+            </div>
+            <div class="input-group mb-3 input-group-lg">
+              <%= f.input :min_age, label: false, :input_html => { class: "form-control", placeholder: "Numbers Only"} %>
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <%= image_tag "plus.svg"%>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="date" class="container tab-pane fade"><br>
+       <div class="row">
+         <div class="col-sm-5 mb-3">
+           Calender will be here
+         </div>
+         <div class="col-sm-7">
+           <div class="row">
+             <div class="col-sm-7 mb-3">
+               <div class="font-weight-bold">
+                 Start time*
+               </div>
+               <div class="input-group mb-3 input-group-lg getTimeWrapper">
+                 <input type="text" class="form-control getTime" placeholder="Start time">
+                 <div class="input-group-append">
+                   <span class="input-group-text">
+                     <%= image_tag "clock.svg", height: "24"%>
+                   </span>
+                 </div>
+                 <div class="input-group-append">
+                   <span class="input-group-text">
+                     <%= image_tag "plus.svg", height: "24"%>
+                   </span>
+                 </div>
+               </div>
+             </div>
+             <div class="col-sm-5 mb-3"></div>
+             <div class="col-sm-7 mb-3">
+               <div class="font-weight-bold">
+                   End time*
+               </div>
+               <div class="input-group mb-3 input-group-lg getTimeWrapper">
+                 <input type="text" class="form-control getTime" placeholder="End time">
+                 <div class="input-group-append">
+                   <span class="input-group-text">
+                     <%= image_tag "clock.svg", height: "24"%>
+                   </span>
+                 </div>
+                 <div class="input-group-append">
+                   <span class="input-group-text">
+                     <%= image_tag "plus.svg", height: "24"%>
+                   </span>
+                 </div>
+               </div>
+             </div>
+             <div class="col-sm-5 mb-3"></div>
+           </div>
+
+         </div>
+
+       </div>
+
+     </div>
+     <div id="price" class="container tab-pane fade"><br>
+       <div class="row mb-3">
+         <div class="col">
+           <div class="font-weight-bold">
+             Set a currency*
+           </div>
+           <%= f.input :currency, label: false, as: :select, collection: ["USD", "EUR"], :input_html => { class: "custom-select"} %>
+         </div>
+         <div class="col"></div>
+       </div>
+
+       <div class="row mb-3">
+         <div class="col">
+           <div class="font-weight-bold">
+             Price for an adult*
+           </div>
+           <%= f.input :adult_price, label: false, :input_html => { class: "form-control"} %>
+         </div>
+         <div class="col"></div>
+       </div>
+
+       <div class="row mb-3">
+         <div class="col">
+           <div class="font-weight-bold">
+             Price for kids (3-12)
+           </div>
+           <%= f.input :kids_price, label: false, :input_html => { class: "form-control"} %>
+         </div>
+         <div class="col text-left">
+           <div class="custom-control custom-checkbox mt-3">
+             <%= f.input :kids_free, label: false, as: :boolean, :input_html => { class: "custom-control-input",id: "kidFree", name: "kidFree"} %>
+             <label class="custom-control-label" for="kidFree">free</label>
+           </div>
+         </div>
+       </div>
+
+       <div class="row mb-3">
+         <div class="col">
+           <div class="font-weight-bold">
+               Price for a baby (0-3)
+           </div>
+           <%= f.input :baby_price, label: false, :input_html => { class: "form-control"} %>
+         </div>
+         <div class="col">
+           <div class="custom-control custom-checkbox mt-3">
+             <%= f.input :baby_free, label: false, as: :boolean, :input_html => { class: "custom-control-input", id: "babyFree", name: "babyFree"} %>
+             <label class="custom-control-label" for="babyFree">free</label>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+   <div class="row mt-3 fourthStepButton">
+     <div class="col-sm-12 text-left">
+       <button class="btn btn-warning text-white font-weight-bold goNextStep" data-prev-step="3" data-current-step="4" data-next-step="" data-tab="highlights">
+         Save
+       </button>
+     </div>
+   </div>
+    </div>
+  </div>
+  <div class="gettingData"></div>
+  <% end %>
+
+
+  <!-- STEP 4 END -->
+
+ <footer>
+   <div class="text-center text-white py-3">
+     <small>Copyright ©<span class="currentYear">2019</span> All rights reserved</small>
+   </div>
+ </footer>
+ <a href="#" class="scroll"><i class="fas fa-chevron-up"></i></a>
