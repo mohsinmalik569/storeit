@@ -36,7 +36,7 @@ set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
 # Default value for :linked_files is []
 # append :linked_files, "config/database.yml"
-set :linked_files, fetch(:linked_files, []).concat(%w{config/nginx.conf config/database.yml})
+set :linked_files, fetch(:linked_files, []).concat(%w{.env config/nginx.conf config/database.yml})
 
 # Default value for linked_dirs is []
 # append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
