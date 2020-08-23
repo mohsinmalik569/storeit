@@ -2,7 +2,7 @@
 lock "~> 3.14.1"
 
 set :application, "storeit"
-set :repo_url, "git@github.com:mohsinmalik569/storeit.git"
+set :repo_url, "https://github.com/mohsinmalik569/storeit.git"
 
 set :user,            'ec2-user'
 set :puma_threads,    [4, 16]
@@ -36,7 +36,7 @@ set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
 # Default value for :linked_files is []
 # append :linked_files, "config/database.yml"
-set :linked_files, fetch(:linked_files, []).concat(%w{.env config/nginx.conf config/database.yml})
+set :linked_files, fetch(:linked_files, []).concat(%w{config/nginx.conf config/database.yml})
 
 # Default value for linked_dirs is []
 # append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
